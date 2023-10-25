@@ -36,6 +36,8 @@ public class User {
     @Column(name = "PROFILE_URL")
     private String profileURL;
 
+    @Column(name = "DELETE_YN")
+    private boolean deleteYn;
 
 
 

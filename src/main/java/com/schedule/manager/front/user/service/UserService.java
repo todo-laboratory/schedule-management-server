@@ -2,6 +2,7 @@ package com.schedule.manager.front.user.service;
 
 import com.schedule.manager.front.user.entity.User;
 import com.schedule.manager.front.user.model.request.CreateUserReqDTO;
+import com.schedule.manager.front.user.model.request.UpdateUserReqDTO;
 import com.schedule.manager.front.user.repository.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,16 +26,29 @@ public class UserService {
 
     @Transactional(rollbackOn = Exception.class)
     public User createUser(CreateUserReqDTO dto) {
-        log.info("dto: {}", dto.toString());
         User user = modelMapper.map(dto, User.class);
-        log.info("model user: {}", user.getName());
         User returnedUser = userRepository.save(user);
         return returnedUser;
     }
 
+    @Transactional(rollbackOn = Exception.class)
+    public User updateUser(UpdateUserReqDTO dto) {
+        User user = this.findUserById(dto.getId());
 
-    public User getUserById(Long userId) {
+        user.setName(dto.getName());
+        user.setNickName(dto.getNickName());
+        user.setProfileURL(dto.getProfileURL());
+        user.setDeleteYn(dto.isDeleteYn());
+
+        return user;
+    }
+
+    public User findUserById(Long userId) {
         return userRepository.findById(userId).orElse(null);
+    }
+
+    public void deleteUser(Long userId) {
+        userRepository.deleteUserById(userId);
     }
 
 

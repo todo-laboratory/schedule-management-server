@@ -9,8 +9,10 @@ import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long>, CustomUserRepository {
     @Override
     Optional<User> findById(Long userId);
+
+    void deleteById(Long userId);
 
 }

@@ -1,6 +1,8 @@
 package com.schedule.manager.front.user.controller;
 
+import com.schedule.manager.front.user.entity.User;
 import com.schedule.manager.front.user.model.request.CreateUserReqDTO;
+import com.schedule.manager.front.user.model.request.UpdateUserReqDTO;
 import com.schedule.manager.front.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -21,14 +23,13 @@ public class UserController {
     }
 
     @PostMapping()
-    public void createUser(@RequestBody CreateUserReqDTO dto) {
-        log.info("createUser dto: {}", dto);
-        userService.createUser(dto);
+    public User createUser(@RequestBody CreateUserReqDTO dto) {
+        return userService.createUser(dto);
     }
 
     @PutMapping()
-    public void updateUser(@RequestBody String json) {
-
+    public User updateUser(@RequestBody UpdateUserReqDTO dto) {
+        return userService.updateUser(dto);
     }
 
     @DeleteMapping()
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping()
-    public void getUser(@NotBlank @RequestParam Long id) {
+    public void findUserById(@NotBlank @RequestParam Long id) {
 
     }
 }
