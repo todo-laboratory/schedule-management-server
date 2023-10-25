@@ -8,12 +8,13 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.util.Date;
 
-@SuperBuilder
-@Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "TB_USER")
+@Data
+@NoArgsConstructor( access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Entity
-@NoArgsConstructor
-@Table(name = "TB_USER", schema = "GROUP")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
