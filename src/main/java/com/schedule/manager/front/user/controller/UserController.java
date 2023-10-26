@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotBlank;
 
 @Slf4j
-@RequestMapping("/fo/user")
+@RequestMapping("/user")
 @Controller
 public class UserController {
 
@@ -33,13 +33,13 @@ public class UserController {
     }
 
     @DeleteMapping()
-    public void deleteUser(@RequestBody String json) {
-
+    public void deleteUser(@NotBlank @RequestParam Long id) {
+        userService.deleteUser(id);
     }
 
     @GetMapping()
-    public void findUserById(@NotBlank @RequestParam Long id) {
-
+    public User findUserById(@NotBlank @RequestParam Long id) {
+        return userService.findUserById(id);
     }
 }
 

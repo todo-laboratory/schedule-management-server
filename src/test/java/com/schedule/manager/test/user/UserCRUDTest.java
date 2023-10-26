@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @Slf4j
 @SpringBootTest
-public class UserCrudTest {
+public class UserCRUDTest {
 
     @Autowired
     private UserService userService;
