@@ -44,6 +44,7 @@ public class UserService {
     }
 
     public User findUserById(Long userId) {
+        // TODO 에러 응답 처리
         return userRepository.findById(userId).orElse(null);
     }
 

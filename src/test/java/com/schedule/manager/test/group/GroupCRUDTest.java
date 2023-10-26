@@ -2,6 +2,7 @@ package com.schedule.manager.test.group;
 
 import com.schedule.manager.front.group.entity.Group;
 import com.schedule.manager.front.group.model.request.CreateGroupReqDTO;
+import com.schedule.manager.front.group.model.request.UpdateGroupReqDTO;
 import com.schedule.manager.front.group.service.GroupService;
 import com.schedule.manager.front.user.entity.User;
 import com.schedule.manager.front.user.model.request.CreateUserReqDTO;
@@ -58,6 +59,22 @@ public class GroupCRUDTest {
 
         // Create 확인
         Assertions.assertEquals(group.getGroupName(), dto.getGroupName());
+
+        // Read 확인
+        Group findGroup = groupService.findGroupById(group.getId());
+        Assertions.assertEquals(findGroup.getId(), group.getId());
+
+        // Update 확인
+        UpdateGroupReqDTO updateDTO = UpdateGroupReqDTO.builder().groupName("updatedTest")
+                .id(findGroup.getId()).build();
+
+        Group updatedGroup = groupService.updateGroup(updateDTO);
+        Assertions.assertEquals(updatedGroup.getGroupName(), updateDTO.getGroupName());
+
+        // Delete 확인
+        groupService.deleteGroup(updatedGroup.getId());
+        Group deletedGroup = groupService.findGroupById(group.getId());
+        Assertions.assertEquals(deletedGroup.isDeleteYn(), true);
 
     }
 

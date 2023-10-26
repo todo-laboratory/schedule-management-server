@@ -13,7 +13,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,9 +36,8 @@ public class GroupService {
     @Transactional(rollbackOn = Exception.class)
     public Group createGroup(CreateGroupReqDTO dto) {
 
-        // user_id -> user
         // TODO 리팩토링 해야할듯..
-        List<User> userList = dto.getUserIdList().stream()
+        List<User> userList = Optional.ofNullable(dto.getUserIdList()).orElse(new ArrayList<>()).stream()
                 .map(userService::findUserById)
                 .collect(Collectors.toList());
 
@@ -49,23 +50,30 @@ public class GroupService {
 
     @Transactional(rollbackOn = Exception.class)
     public Group updateGroup(UpdateGroupReqDTO dto) {
-        Group group = this.findUserById(dto.getId());
+        Group group = this.findGroupById(dto.getId());
 
         group.setGroupName(dto.getGroupName());
         group.setGroupDescription(dto.getGroupDescription());
         group.setDeleteYn(dto.isDeleteYn());
         group.setManagerYn(dto.isManagerYn());
         group.setGroupEndTime(dto.getGroupEndTime());
-        // group.setUsers(dto.getUsers());
+
+        // TODO 리팩토링 해야할듯..
+        List<User> userList = Optional.ofNullable(dto.getUserIdList()).orElse(new ArrayList<>()).stream()
+                .map(userService::findUserById)
+                .collect(Collectors.toList());
+
+        group.setUsers(userList);
 
         return group;
     }
 
-    public Group findUserById(Long groupId) {
+    public Group findGroupById(Long groupId) {
+        // TODO 에러 응답 처리
         return groupRepository.findById(groupId).orElse(null);
     }
 
-    public void deleteUser(Long groupId) {
+    public void deleteGroup(Long groupId) {
         groupRepository.deleteGroupById(groupId);
     }
 

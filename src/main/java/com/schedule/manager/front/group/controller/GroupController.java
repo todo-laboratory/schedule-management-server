@@ -36,12 +36,12 @@ public class GroupController {
 
     @DeleteMapping()
     public void deleteGroup(@NotBlank @RequestParam Long id) {
-        groupService.deleteUser(id);
+        groupService.deleteGroup(id);
     }
 
     @GetMapping()
     public Group findGroupById(@NotBlank @RequestParam Long id) {
-        return groupService.findUserById(id);
+        return groupService.findGroupById(id);
     }
 
 }
