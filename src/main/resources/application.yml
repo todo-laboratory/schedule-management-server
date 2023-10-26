@@ -47,13 +47,13 @@ spring:
       pool-name: schedule-management
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
-    hibernate:
-      ddl-auto: create-drop
-      show-sql: true
+#    hibernate:
+#      ddl-auto: create
+#      show-sql: true
     properties:
       hibernate:
         format_sql: true
-        hbm2ddl.auto: update
+        hbm2ddl.auto: create
         implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
         physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         use_sql_comments: true
